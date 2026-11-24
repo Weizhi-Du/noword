@@ -3,14 +3,13 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, interactive-widget=resizes-content">
-  <meta name="description" content="A quiet writing space that remembers your pages for the life of the browser tab.">
+  <meta name="description" content="A quiet writing space that keeps your pages in your browser.">
   <meta name="referrer" content="no-referrer">
   <meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'self'; style-src 'self'; img-src 'self'; base-uri 'none'; form-action 'none'">
   <title>noword. / 无言.</title>
   <link rel="icon" href="./icon.svg" type="image/svg+xml">
-  <link rel="stylesheet" href="./style.css?v=2">
-  <script defer src="./vendor/markdown-it.min.js"></script>
-  <script defer src="./app.js?v=2"></script>
+  <link rel="stylesheet" href="./style.css?v=3">
+  <script type="module" src="./app.js?v=3"></script>
 </head>
 <body>
   <header id="controls" class="controls" hidden>
@@ -30,23 +29,35 @@
     </button>
     <section class="panel options-panel" id="options-panel" aria-labelledby="options-heading" hidden>
       <h2 id="options-heading">Options</h2>
-      <button id="theme" type="button">Switch theme</button>
-      <button id="preview" type="button" hidden>Markdown preview</button>
-      <p id="session-details">Pages stay in this browser tab and survive refreshes. Closing the tab normally ends the session.</p>
+      <fieldset id="themes" class="themes">
+        <legend>Theme</legend>
+        <label><input type="radio" name="theme" value="system" checked>System</label>
+        <label><input type="radio" name="theme" value="paper">Paper</label>
+        <label><input type="radio" name="theme" value="white">White</label>
+        <label><input type="radio" name="theme" value="mist">Mist</label>
+        <label><input type="radio" name="theme" value="charcoal">Charcoal</label>
+        <label><input type="radio" name="theme" value="midnight">Midnight</label>
+      </fieldset>
+      <p>Pages are saved in this browser on this device.</p>
     </section>
   </header>
 
-  <main class="workspace" aria-label="Writing workspace">
-    <textarea id="editor" aria-label="Write your draft" placeholder=" " autocomplete="off" autocorrect="off" spellcheck="false" dir="auto"></textarea>
-    <h1 class="wordmark"><span>noword.</span><span class="slash">/</span><span lang="zh-Hans">无言.</span></h1>
+  <main class="workspace" id="workspace" aria-label="Writing workspace" data-empty="true">
+    <div id="editor"></div>
+    <div class="format-bar" id="format-bar" role="group" aria-label="Text formatting" hidden>
+      <button type="button" data-mark="strong" aria-label="Bold" title="Bold"><b>B</b></button>
+      <button type="button" data-mark="em" aria-label="Italic" title="Italic"><i>I</i></button>
+      <button type="button" data-mark="underline" aria-label="Underline" title="Underline"><u>U</u></button>
+      <button type="button" data-mark="strike" aria-label="Strikethrough" title="Strikethrough"><s>S</s></button>
+    </div>
+    <h1 class="wordmark"><span>noword.</span><span class="slash">/</span><span class="wordmark-cn" lang="zh-Hans">无言<span>.</span></span></h1>
     <span class="empty-caret" aria-hidden="true"></span>
-    <article class="preview-area" id="preview-pane" aria-label="Markdown preview" dir="auto" hidden></article>
   </main>
 
   <footer id="status-bar" class="status-bar" hidden>
     <span id="session-status" role="status"></span>
     <span id="counts">0 words · 0 characters</span>
   </footer>
-  <noscript><p class="no-script">Enable JavaScript to keep your draft through refreshes.</p></noscript>
+  <noscript><p class="no-script">Enable JavaScript to write and save pages.</p></noscript>
 </body>
 </html>
